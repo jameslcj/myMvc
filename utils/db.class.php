@@ -24,12 +24,37 @@ final class db
         $config = loadConfig('db');
         self::$connect = mysql_connect($config['hostname'], $config['username'], $config['password']);
         self::$connect || die('db connect err');
+        mysql_query('set names utf8');
+        mysql_select_db($config['database']);
     }
     
     public function query($query)
     {
+        $resArr = array();
         $result = mysql_query($query, self::$connect);
-        $result = mysql_fetch_assoc($result);
-        return $result;
+        if ($result)
+        {
+            while ($row = mysql_fetch_assoc($result))
+            {
+                $resArr[] = $row;
+            }
+        }
+        else
+        {
+            self::$obj->getErr();
+        }
+        
+        return $resArr;
+    }
+    
+    public function getErr()
+    {
+        $err = mysql_error(self::$connect);
+        
+        if (DEV_MODEL && $err)
+        {
+            echo $err, '<br>';
+        }
+        return $err;
     }
 }

@@ -16,7 +16,7 @@ function __autoload($objName)
     }
     else if (false !== strstr($objName, 'Model'))
     {
-        return loadModel($objName);
+        loadModel($objName);
     }
 }
 /**
@@ -66,6 +66,50 @@ function loadModel($funcName)
     // return new $funcName();
 }
 
+/**
+ * 加载工具类
+ * @method   loadUtil
+ * @Author   lichen
+ * @Datetime 2017-02-11T16:28:41+080
+ * @param    [type]                  $funcName [description]
+ * @return   [type]                            [description]
+ */
+function loadUtil($funcName)
+{
+    $funcName = $funcName;
+    require(UTIL_PATH . $funcName . '.class.php');
+    // return new $funcName();
+}
+
+/**
+ * 加载配置文件
+ * @method   loadConfig
+ * @Author   lichen
+ * @Datetime 2017-02-11T16:33:03+080
+ * @param    [type]                  $fileName [description]
+ * @return   [type]                            [description]
+ */
+function loadConfig($fileName)
+{
+    require(CONF_PATH . $fileName . '.config.php');
+    $temp = get_defined_vars ();
+    if (isset ( $temp ['php_errormsg'] ))
+    {
+        unset ( $temp ['php_errormsg'] ); // fix // php5.3.5
+    }
+    
+    return $temp;
+}
+
+/**
+ * 渲染视图
+ * @method   display
+ * @Author   lichen
+ * @Datetime 2017-02-11T16:00:58+080
+ * @param    [type]                  $fileName [description]
+ * @param    [type]                  $data     [description]
+ * @return   [type]                            [description]
+ */
 function display($fileName, $data)
 {
     $suffix = '.tpl';

@@ -1,5 +1,5 @@
 <?php
-class indexModel
+class indexModel extends baseModel
 {
     public function index()
     {

@@ -2,10 +2,17 @@
 
 class baseModel
 {
-    protected $db = null;
+    protected static $db = null;
     public function __construct()
     {
         loadUtil('db');
-        $this->db = db::getObj();
+        self::$db = db::getObj();
+    }
+    
+    public function getDatabases()
+    {
+        $query = 'SHOW databases;';
+        $result = self::$db->query($query);
+        return $result;
     }
 }

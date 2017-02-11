@@ -26,9 +26,8 @@ final class db
         self::$connect || die('db connect err');
     }
     
-    public function getDatabases()
+    public function query($query)
     {
-        $query = 'SHOW databases;';
         $result = mysql_query($query, self::$connect);
         $result = mysql_fetch_assoc($result);
         return $result;

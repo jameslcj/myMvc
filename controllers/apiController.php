@@ -10,6 +10,10 @@ class apiController
     public function indexAction()
     {
         $dataArr = self::$modelObj->getAllData();
+        foreach ($dataArr as $key => $valArr)
+        {
+            $dataArr[$key]['image'] = getImagePath($valArr['image']);
+        }
         $this->data2Json($dataArr);
     }
     

@@ -141,6 +141,14 @@ function direct($info = '请您先登录!', $duration = 3, $urlInfo = '')
     exit();
 }
 
+/**
+ * 获取图片地址
+ * @method   getImagePath
+ * @Author   lichen
+ * @Datetime 2017-02-24T15:51:51+080
+ * @param    [type]                  $path [description]
+ * @return   [type]                        [description]
+ */
 function getImagePath($path)
 {
     return 'http://'. $_SERVER['HTTP_HOST'] . dirname($_SERVER['SCRIPT_NAME']) . '/upload/' . $path;

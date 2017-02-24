@@ -34,7 +34,7 @@ function getGP($param)
         return $_POST[$param];
     }
     
-    return isset($_GET[$param]) ? $_GET[$param] : '';
+    return isset($_GET[$param]) ? $_GET[$param] : null;
 }
 
 /**
@@ -47,7 +47,7 @@ function getGP($param)
  */
 function loadController($objName)
 {
-    require(CTL_PATH . $objName . '.php');
+    require_once(CTL_PATH . $objName . '.php');
     // return new $objName();
 }
 
@@ -62,7 +62,7 @@ function loadController($objName)
 function loadModel($funcName)
 {
     $funcName = $funcName;
-    require(MODEL_PATH . $funcName . '.class.php');
+    require_once(MODEL_PATH . $funcName . '.class.php');
     // return new $funcName();
 }
 
@@ -77,7 +77,7 @@ function loadModel($funcName)
 function loadUtil($funcName)
 {
     $funcName = $funcName;
-    require(UTIL_PATH . $funcName . '.class.php');
+    require_once(UTIL_PATH . $funcName . '.class.php');
     // return new $funcName();
 }
 
@@ -91,7 +91,7 @@ function loadUtil($funcName)
  */
 function loadConfig($fileName)
 {
-    require(CONF_PATH . $fileName . '.config.php');
+    require_once(CONF_PATH . $fileName . '.config.php');
     $temp = get_defined_vars ();
     if (isset ( $temp ['php_errormsg'] ))
     {
@@ -110,9 +110,38 @@ function loadConfig($fileName)
  * @param    [type]                  $data     [description]
  * @return   [type]                            [description]
  */
-function display($fileName, $data)
+function display($fileName, $data = array())
 {
     $suffix = '.tpl';
     $fileName .= $suffix;
-    require(VIEW_PATH . $fileName);
+    require_once(VIEW_PATH . $fileName);
+}
+
+/**
+ * 重定向url
+ * @method   direct
+ * @Author   lichen
+ * @Datetime 2017-02-23T14:25:48+080
+ * @param    string                  $info     [description]
+ * @param    integer                 $duration [description]
+ * @param    array                   $urlInfo  [description]
+ * @return   [type]                            [description]
+ */
+function direct($info = '请您先登录!', $duration = 3, $urlInfo = '')
+{
+    $url = 'http://'. $_SERVER['HTTP_HOST'] . $_SERVER['SCRIPT_NAME'];
+    $urlInfo && is_array($urlInfo) && $urlInfo = $url . '?' . http_build_query($urlInfo);
+    empty($urlInfo) && $urlInfo = $url;
+    $data = array(
+        'tips' => $info,
+        'duration' => $duration,
+        'urlInfo' => $urlInfo,
+    );
+    display('error', $data);
+    exit();
+}
+
+function getImagePath($path)
+{
+    return 'http://'. $_SERVER['HTTP_HOST'] . dirname($_SERVER['SCRIPT_NAME']) . '/upload/' . $path;
 }

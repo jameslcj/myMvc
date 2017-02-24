@@ -10,3 +10,4 @@
 ! defined('CONF_PATH') && define('CONF_PATH', ROOT_PATH . '/config/');
 ! defined('PUBLIC_PATH') && define('PUBLIC_PATH', ROOT_PATH . '/public/');
 ! defined('UTIL_PATH') && define('UTIL_PATH', ROOT_PATH . '/utils/');
+! defined('UPLOAD_PATH') && define('UPLOAD_PATH', ROOT_PATH . '/upload/');

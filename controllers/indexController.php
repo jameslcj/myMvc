@@ -1,10 +1,10 @@
 <?php
-class indexController
+class indexController extends baseController
 {
     public function indexAction()
     {
         $modelObj = new indexModel();
         $data = $modelObj->index();
-        display('index', $data);
+        display('admin/index', $data);
     }
 }
